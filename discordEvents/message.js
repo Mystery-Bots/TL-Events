@@ -30,18 +30,13 @@ module.exports.Run = async function(bot,message){
 
 	//Check to see if command is disabled
 	if(info.disabled){
-		return message.channel.createMessage('This command is disabled currently. Join the support server for more info')
-	}
-
-	//Check if command is webhook only
-	if (info.WebhookOnly && !message.webhookID) {
-		return message.channel.createMessage('This is a command for webhooks only')
+		return message.channel.createMessage('This command is disabled currently.')
 	}
 	
-	if (!info.WebhookOnly && message.author.bot) return
+	if (message.author.bot) return
 
 	//Check if command is GuildOnly.
-	if (info.GuildOnly && !message.channel.guild) {
+	if (!message.channel.guild) {
 		return message.channel.createMessage('I can\'t execute that command inside DMs!')
 	}
 
@@ -63,8 +58,8 @@ module.exports.Run = async function(bot,message){
 	const timestamps = cooldowns.get(info.name)
 	const cooldownAmount = ms(info.cooldown || 0) //info.cooldown * 1000
 
-	if (timestamps.has(message.author.id)) {
-		const expirationTime = timestamps.get(message.author.id) + cooldownAmount
+	if (timestamps.has(message.channel.guild.id)) {
+		const expirationTime = timestamps.get(message.channel.guild.id) + cooldownAmount
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
@@ -72,8 +67,8 @@ module.exports.Run = async function(bot,message){
 		}
 	}
 
-	timestamps.set(message.author.id, now)
-	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
+	timestamps.set(message.channel.guild.id, now)
+	setTimeout(() => timestamps.delete(message.channel.guild.id), cooldownAmount)
 	try {
 		//Run command.
 		await command.run(bot, message, args)
