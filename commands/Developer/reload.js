@@ -1,7 +1,7 @@
 
 
 module.exports.run = async (bot, message, args) => {
-    if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "addtoken"`)
+    if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "reload"`)
     const commandName = args[0].toLowerCase();
 		const command = bot.commands.get(commandName) || bot.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
 		if (!command) {
