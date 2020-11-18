@@ -6,7 +6,7 @@ const ms = require("ms");
 const moment = require("moment");
 const MongoClient = require('mongodb').MongoClient
 
-const client = new MongoClient(bot.config.database, {useUnifiedTopology: true});
+const client = new MongoClient(config.database, {useUnifiedTopology: true});
 client.connect().then(connection => {
 	database = connection.db("christmas")
 	bot.database = database
