@@ -24,7 +24,7 @@ function spawnGift(type){
         title:`A ${type} Gift Appeared`,
         description: `Use \`tlclaim\` to claim the gift`,
         image: {
-            url: "https://discord.com/assets/7a7ff35f227d659eb5efd817e2052174.svg"
+            url: "https://themystery.s-ul.eu/bot/s7ZHjnD5"
         },
         color: 0xafafaf
     }
@@ -49,12 +49,13 @@ function claimedGift(type, user){
 } 
 
 module.exports.Run = async function(bot, message){
+    if (message.channel.id != '722885661459218433') return
     let statsCollection = bot.database.collection('stats')
     let statsResult = await statsCollection.findOne({_id:'5fb5896be09eb535b97403be'})
     let now = Date.now()
     if (message.author.bot) return
     if (now > statsResult.SpawnTime){
-        let channel = bot.getChannel("633920642605121578")
+        let channel = bot.getChannel("722885661459218433")
         let type = typeConvert[await getType()]
         let spawnMessage = await channel.createMessage({embed: spawnGift(type)})
         let newSpawnDuration = Math.floor(Math.random() * ((statsResult.maxSpawn+1) - statsResult.minSpawn) + 1) // Mins
