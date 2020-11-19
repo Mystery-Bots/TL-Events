@@ -95,7 +95,7 @@ bot
 	})
 	.on("messageCreate", (message) => {
 		require('./discordEvents/message').Run(bot, message)
-		//require('./services/spawn').Run(bot, message)
+		require('./services/spawn').Run(bot, message)
 	})
 
 setTimeout(async() => {
