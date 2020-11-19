@@ -20,15 +20,15 @@ module.exports.run = async (bot, message, args) => {
         description: `ID: ${user.id}\n\n**Total Points:** ${userResult.totalPoints}\n**Ranking:** ${placing}${medals[placing] ? medals[placing] : ""}`,
         fields: [
             {
-                name: "Common",
+                name: "Common (1 pt)",
                 value: userResult.common
             },
             {
-                name: "Rare",
+                name: "Rare (2 pts)",
                 value: userResult.rare
             },
             {
-                name: "Epic",
+                name: "Epic (5 pts)",
                 value: userResult.epic
             },
             
