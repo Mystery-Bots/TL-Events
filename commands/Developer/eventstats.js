@@ -12,27 +12,27 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Total Staff Gift",
-                value: `${result.totalStaff}`,
+                value: `${result.totalStaff.toLocaleString()}`,
                 inline: true
             },
             {
                 name: "Total Collected Gifts",
-                value: `${result.totalClaims}`,
+                value: `${result.totalClaims.toLocaleString()}`,
                 inline: true
             },
             {
                 name: "Total Common Gifts",
-                value: `${result.totalCommon}`,
+                value: `${result.totalcommon.toLocaleString()}`,
                 inline: true
             },
             {
                 name: "Total Rare Gifts",
-                value: `${result.totalRare}`,
+                value: `${result.totalrare.toLocaleString()}`,
                 inline: true
             },
             {
                 name: "Total Epic Gifts",
-                value: `${result.totalEpic}`,
+                value: `${result.totalepic.toLocaleString()}`,
                 inline: true
             },
         ]}

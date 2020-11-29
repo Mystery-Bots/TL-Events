@@ -17,19 +17,19 @@ module.exports.run = async (bot, message, args) => {
     embed = {
         title: `${user.username}'s Stats`,
         color: 0xff99f8,
-        description: `ID: ${user.id}\n\n**Total Points:** ${userResult.totalPoints}\n**Ranking:** ${placing}${medals[placing] ? medals[placing] : ""}`,
+        description: `ID: ${user.id}\n\n**Total Points:** ${userResult.totalPoints.toLocaleString()}\n**Ranking:** ${placing}${medals[placing] ? medals[placing] : ""}`,
         fields: [
             {
                 name: "Common (1 pt)",
-                value: userResult.common
+                value: userResult.common.toLocaleString()
             },
             {
                 name: "Rare (2 pts)",
-                value: userResult.rare
+                value: userResult.rare.toLocaleString()
             },
             {
                 name: "Epic (5 pts)",
-                value: userResult.epic
+                value: userResult.epic.toLocaleString()
             },
             
         ]
