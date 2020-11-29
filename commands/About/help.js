@@ -40,7 +40,8 @@ module.exports.run = (bot, message, args) => {
 			`❯ **Description:** ${command.description || "No Description provided."}`,
 			`❯ **Usage:** ${command.usage ? `\`${bot.config.prefix}${command.name} ${command.usage}\`` : "No Usage"} `,
 			`❯ **Aliases:** ${command.aliases ? command.aliases.join(", ") : "None"}`,
-            `❯ **Category:** ${command.category}`
+			`❯ **Category:** ${command.category}`,
+			`❯ **Cooldown:** ${command.cooldown ? command.cooldown : "No Cooldown"}`
 		].join("\n"))
 
 		return message.channel.createMessage(embedObject).catch((error) => {
