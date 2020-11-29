@@ -4,13 +4,14 @@ const Discord = require("eris")
 const cooldowns = new Discord.Collection()
 
 module.exports.Run = async function(bot,message){
+	if (message.channel.guild.id == "704824867781869600") return
 	let prefix = bot.config.prefix
 	var args = message.content.slice(prefix.length).trim().split(/ +/g)
 	const cmd = args.shift().toLowerCase()
 	let command
 
 	//Check if starts with prefix
-	if (!message.content.startsWith(prefix) || message.author == bot.user) return
+	if (!message.content.toLowerCase().startsWith(prefix) || message.author == bot.user) return
 
 	if (cmd.length === 0) return
 	if (bot.commands.has(cmd)) command = bot.commands.get(cmd)
@@ -63,7 +64,7 @@ module.exports.Run = async function(bot,message){
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
-			return message.channel.createMessage(`You have already checked for gifts today. Please wait ${ms(timeLeft, {long:true})} before checking again. `)
+			return message.channel.createMessage(`This command has already been run. Please wait ${ms(timeLeft, {long:true})} before running again.`)
 		}
 	}
 
