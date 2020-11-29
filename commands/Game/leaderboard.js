@@ -11,7 +11,7 @@ module.exports.run = async (bot, message, args) => {
     let descriptionList = ["Based on total points:"]
     let placing = 1
     top10.forEach(user => {
-        descriptionList.push(`${medals[placing] ? medals[placing] : `#${placing}`} <@${user.userID}>: ${user.totalPoints}`)
+        descriptionList.push(`${medals[placing] ? medals[placing] : `#${placing}`} <@${user.userID}>: ${user.totalPoints.toLocaleString()}`)
         placing += 1
     })
     embedObject = {
@@ -26,5 +26,5 @@ module.exports.info = {
     name: "leaderboard",
     description: "Get the current leaderboard",
     category: "Game",
-    cooldown: "1s"
+    cooldown: "20s"
 }
