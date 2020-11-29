@@ -49,19 +49,22 @@ function claimedGift(type, user){
 } 
 
 module.exports.Run = async function(bot, message){
-    if (message.channel.id != '779081002311352370') return
+    if (message.channel.guild.id != '704824867781869600') return // Public
+    //if (message.channel.guild.id != '504756666693189642') return // Testing
     let statsCollection = bot.database.collection('stats')
     let statsResult = await statsCollection.findOne({_id:'5fb5896be09eb535b97403be'})
     let now = Date.now()
     if (message.author.bot) return
     if (now > statsResult.SpawnTime){
-        let channel = bot.getChannel("779081002311352370")
+        let channel = bot.getChannel("779081002311352370") // Public
+        //let channel = bot.getChannel("633920642605121578") // Testing
+        
         let type = typeConvert[await getType()]
         let spawnMessage = await channel.createMessage({embed: spawnGift(type)})
         let newSpawnDuration = Math.floor(Math.random() * ((statsResult.maxSpawn+1) - statsResult.minSpawn) + 1) // Mins
-        let SpawnTime = (Date.now() + ms(`${newSpawnDuration}s`)).toFixed(0)
+        let SpawnTime = (Date.now() + ms(`${newSpawnDuration}h`)).toFixed(0)
         await statsCollection.updateOne({_id:'5fb5896be09eb535b97403be'},{$set:{'SpawnTime':SpawnTime}})
-        let responses = await channel.awaitMessages(m => m.content === "tlclaim", { time: ms('5m'), maxMatches: 1 });    
+        let responses = await channel.awaitMessages(m => m.content.toLowerCase() === "tlclaim", { time: ms('5m'), maxMatches: 1 });    
         if (responses.length){
             try{
                 await responses[0].delete()
@@ -84,7 +87,7 @@ module.exports.Run = async function(bot, message){
                     }
                     statsUpdateDoc = {$inc:{
                         "totalClaims": 1,
-                        "totalCommon": 1
+                        "totalcommon": 1
                     }}
                 }
                 else if (type == "Rare"){
@@ -98,7 +101,7 @@ module.exports.Run = async function(bot, message){
                     }
                     statsUpdateDoc = {$inc:{
                         "totalClaims": 1,
-                        "totalRare": 1
+                        "totalrare": 1
                     }}
                 }
                 else if (type == "Epic"){
@@ -112,7 +115,7 @@ module.exports.Run = async function(bot, message){
                     }
                     statsUpdateDoc = {$inc:{
                         "totalClaims": 1,
-                        "totalEpic": 1
+                        "totalepic": 1
                     }}
                 }
                 await statsCollection.updateOne({_id:'5fb5896be09eb535b97403be'},statsUpdateDoc)
@@ -129,7 +132,7 @@ module.exports.Run = async function(bot, message){
                     }
                     statsUpdateDoc = {$inc:{
                         "totalClaims": 1,
-                        "totalCommon": 1
+                        "totalcommon": 1
                     }}
                 }
                 else if (type == "Rare"){
@@ -141,7 +144,7 @@ module.exports.Run = async function(bot, message){
                     }
                     statsUpdateDoc = {$inc:{
                         "totalClaims": 1,
-                        "totalRare": 1
+                        "totalrare": 1
                     }}
                 }
                 else if (type == "Epic"){
@@ -153,7 +156,7 @@ module.exports.Run = async function(bot, message){
                     }
                     statsUpdateDoc = {$inc:{
                         "totalClaims": 1,
-                        "totalEpic": 1
+                        "totalepic": 1
                     }}
                 }
                 await statsCollection.updateOne({_id:'5fb5896be09eb535b97403be'},statsUpdateDoc)
