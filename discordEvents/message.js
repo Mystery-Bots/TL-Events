@@ -4,7 +4,6 @@ const Discord = require("eris")
 const cooldowns = new Discord.Collection()
 
 module.exports.Run = async function(bot,message){
-	if (message.channel.guild.id == "704824867781869600") return
 	let prefix = bot.config.prefix
 	var args = message.content.slice(prefix.length).trim().split(/ +/g)
 	const cmd = args.shift().toLowerCase()
