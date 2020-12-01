@@ -1,7 +1,7 @@
 {
-  "name": "among-us-bot",
-  "version": "2.0.0",
-  "description": "Discord Among Us chat control bot",
+  "name": "tl-events",
+  "version": "1.0.0",
+  "description": "The Christmas Event bot for TheLounge.",
   "main": "discord.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
