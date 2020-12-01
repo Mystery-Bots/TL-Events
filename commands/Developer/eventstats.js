@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
         title: "Christmas Event Stats",
         fields: [
             {
-                name: "Spawn Times (Seconds)",
+                name: "Spawn Times (Minutes)",
                 value: `Min: ${result.minSpawn}\nMax: ${result.maxSpawn}`,
                 inline: true
             },
