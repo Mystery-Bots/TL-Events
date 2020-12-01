@@ -8,7 +8,13 @@ module.exports.run = async (bot, message, args) => {
     const collection = bot.database.collection(`${message.channel.guild.id}`)
     user = message.mentions[0]
     if(!user){
-        user = message.author
+        if (!args[0]){
+            user = message.author
+        }
+        else {
+            userArray = await message.channel.guild.fetchMembers({userIDs:[args[0]]})
+            user = userArray[0]
+        }
     }
     let userResult = await collection.findOne({"userID": `${user.id}`})
     if (!userResult) return message.channel.createMessage("No user stats found.")
