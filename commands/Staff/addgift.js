@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
         totalrare: 0,
         totalepic: 0
     }
-    //if (!message.member.roles.includes('704921933073875014')) return message.channel.createMessage("Sorry but you can not use this command.")
+    if (!message.member.roles.includes('704921933073875014')) return message.channel.createMessage("Sorry but you can not use this command.")
     userID = args[0]
     user = await message.channel.guild.fetchMembers({userIDs:[userID]})
     user = user[0]
