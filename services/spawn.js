@@ -1,6 +1,16 @@
 const ms = require("ms")
 const Discord = require("eris-additions")(require("eris"))
 
+function makeString(length) {
+    var result           = '';
+    var characters       = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+
 typeConvert = {
     0: "Common",
     1: "Rare",
@@ -22,7 +32,6 @@ async function getType(){
 function spawnGift(type){
     let embed = {
         title:`A ${type} Gift Appeared`,
-        description: `Use \`tlclaim\` to claim the gift`,
         image: {
             url: "https://themystery.s-ul.eu/bot/s7ZHjnD5"
         },
@@ -58,13 +67,15 @@ module.exports.Run = async function(bot, message){
     if (now > statsResult.SpawnTime){
         let channel = bot.getChannel("779081002311352370") // Public
         //let channel = bot.getChannel("633920642605121578") // Testing
-        
         let type = typeConvert[await getType()]
-        let spawnMessage = await channel.createMessage({embed: spawnGift(type)})
+        let randomString = makeString(6)
+        let embed = spawnGift(type)
+        embed.description = `Use \`tlclaim ${randomString}\` to claim the gift`
+        let spawnMessage = await channel.createMessage({embed: embed})
         let newSpawnDuration = Math.floor(Math.random() * ((statsResult.maxSpawn+1) - statsResult.minSpawn) + 1) // Mins
         let SpawnTime = (Date.now() + ms(`${newSpawnDuration}m`)).toFixed(0)
         await statsCollection.updateOne({_id:'5fb5896be09eb535b97403be'},{$set:{'SpawnTime':SpawnTime}})
-        let responses = await channel.awaitMessages(m => m.content.toLowerCase() === "tlclaim", { time: ms('5m'), maxMatches: 1 });    
+        let responses = await channel.awaitMessages(m => m.content.toLowerCase() === `tlclaim ${randomString}`, { time: ms('5m'), maxMatches: 1 });    
         if (responses.length){
             try{
                 await responses[0].delete()
