@@ -24,7 +24,7 @@ module.exports.run = async (bot, message, args) => {
     userID = args[0]
     if (!userID) return message.channel.createMessage("No User ID provided")
     user = await message.channel.guild.fetchMembers({userIDs:[userID]})
-    if( !user) return message.channel.createMessage("Invalid User ID")
+    if (!user[0].username) return message.channel.createMessage("Invalid User ID")
     user = user[0]
     let userCollection = bot.database.collection(`${message.channel.guild.id}`)
     let statsCollection = bot.database.collection('stats')
