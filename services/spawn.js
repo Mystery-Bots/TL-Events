@@ -62,7 +62,7 @@ module.exports.Run = async function(bot, message){
         let type = typeConvert[await getType()]
         let spawnMessage = await channel.createMessage({embed: spawnGift(type)})
         let newSpawnDuration = Math.floor(Math.random() * ((statsResult.maxSpawn+1) - statsResult.minSpawn) + 1) // Mins
-        let SpawnTime = (Date.now() + ms(`${newSpawnDuration}h`)).toFixed(0)
+        let SpawnTime = (Date.now() + ms(`${newSpawnDuration}m`)).toFixed(0)
         await statsCollection.updateOne({_id:'5fb5896be09eb535b97403be'},{$set:{'SpawnTime':SpawnTime}})
         let responses = await channel.awaitMessages(m => m.content.toLowerCase() === "tlclaim", { time: ms('5m'), maxMatches: 1 });    
         if (responses.length){
