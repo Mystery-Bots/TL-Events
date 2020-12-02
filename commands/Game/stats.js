@@ -4,6 +4,13 @@ medals = {
     "3":"🥉"
 }
 
+template = {
+    "common": 0,
+    "rare":0,
+    "epic":0,
+    "totalPoints":0
+}
+
 module.exports.run = async (bot, message, args) => {
     const collection = bot.database.collection(`${message.channel.guild.id}`)
     user = message.mentions[0]
@@ -17,7 +24,12 @@ module.exports.run = async (bot, message, args) => {
         }
     }
     let userResult = await collection.findOne({"userID": `${user.id}`})
-    if (!userResult) return message.channel.createMessage("No user stats found.")
+    if (!userResult) {
+        template.userID = user.id,
+        template.username = `${user.username}#${user.discriminator}`
+        await userCollection.insertOne(userUpdateDoc); 
+        userResult = await collection.findOne({"userID": `${user.id}`})
+    }
     let allResult = await collection.find().sort({totalPoints:-1}).toArray()
     placing = (allResult.map((e)=>{return e.userID}).indexOf(user.id))+1
     embed = {
