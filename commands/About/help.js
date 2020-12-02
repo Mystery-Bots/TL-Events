@@ -25,7 +25,7 @@ module.exports.run = (bot, message, args) => {
 		else if (bot.aliases.has(command)) {
 			cmd = bot.commands.get(bot.aliases.get(command))
 		}
-		if(!cmd || cmd.info.category == "Developer") {
+		if(!cmd || cmd.info.category == "Developer" || cmd.info.category == "Hidden") {
 			embedObject.embed.title = "Invalid Command."
 			embedObject.embed.description =`Do \`${bot.config.prefix}help\` for the list of the commands.`
 			return message.channel.createMessage(embedObject)
@@ -62,8 +62,11 @@ module.exports.run = (bot, message, args) => {
 
 		try {
 			if (dir.size === 0) return
-			else if (category !== "Developer") {
+			else if (category == "Developer" || category == "Hidden") {
 				
+				return
+			}
+			else {
 				embedObject.embed.fields.push({name:`❯ ${capitalise}`, value: dir.map(c => `\`${c.info.name}\``).join(", ")})
 			}
 		}
