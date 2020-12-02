@@ -5,12 +5,12 @@ const normalIMG = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gKgSUNDX1
 
 module.exports.run = async (bot, message, args) => {
     await message.delete()
-    //await bot.editSelf({avatar:normalIMG})
+    await bot.editSelf({avatar:cursedIMG})
     message.channel.createMessage("Welcome to the cursed hour!")
-    /* setTimeout(async () => {
+    setTimeout(async () => {
         await bot.editSelf({avatar:normalIMG})
         message.channel.createMessage("Cursed hour has ended!")
-    }, ms("1h")); */
+    }, ms("1h"));
 }
 
 module.exports.info = {
