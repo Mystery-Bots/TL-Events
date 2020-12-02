@@ -37,7 +37,10 @@ module.exports.run = async (bot, message, args) => {
                 name: "Epic (5 pts)",
                 value: userResult.epic.toLocaleString()
             },
-            
+            {
+                name: "Total Gifts",
+                value: (userResult.common+userResult.rare+userResult.epic).toLocaleString()
+            }
         ]
     }
     message.channel.createMessage({embed:embed})
