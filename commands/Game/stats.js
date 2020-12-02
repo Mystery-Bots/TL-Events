@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args) => {
     if (!userResult) {
         template.userID = user.id,
         template.username = `${user.username}#${user.discriminator}`
-        await userCollection.insertOne(userUpdateDoc); 
+        await collection.insertOne(userUpdateDoc); 
         userResult = await collection.findOne({"userID": `${user.id}`})
     }
     let allResult = await collection.find().sort({totalPoints:-1}).toArray()
