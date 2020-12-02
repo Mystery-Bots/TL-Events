@@ -4,14 +4,15 @@ medals = {
     "3":"🥉"
 }
 
-template = {
-    "common": 0,
-    "rare":0,
-    "epic":0,
-    "totalPoints":0
-}
+
 
 module.exports.run = async (bot, message, args) => {
+    let template = {
+        "common": 0,
+        "rare":0,
+        "epic":0,
+        "totalPoints":0
+    }
     const collection = bot.database.collection(`${message.channel.guild.id}`)
     user = message.mentions[0]
     if(!user){
@@ -27,7 +28,7 @@ module.exports.run = async (bot, message, args) => {
     if (!userResult) {
         template.userID = user.id,
         template.username = `${user.username}#${user.discriminator}`
-        await collection.insertOne(userUpdateDoc); 
+        await collection.insertOne(template); 
         userResult = await collection.findOne({"userID": `${user.id}`})
     }
     let allResult = await collection.find().sort({totalPoints:-1}).toArray()
