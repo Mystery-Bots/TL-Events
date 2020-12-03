@@ -66,6 +66,7 @@ module.exports.run = async (bot, message) => {
     let randomString = makeString(6)
     let embed = spawnGift(type)
     embed.description = `Use \`tlclaim ${randomString}\` to claim the gift`
+    let spawnMessage = await channel.createMessage({embed: embed})
     let responses = await channel.awaitMessages(m => m.content.toLowerCase() === `tlclaim ${randomString}`, { time: ms('5m'), maxMatches: 1 });    
     if (responses.length){
         try{
