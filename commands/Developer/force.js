@@ -57,18 +57,33 @@ function claimedGift(type, user){
     return embed
 } 
 
-module.exports.run = async (bot, message) => {
+module.exports.run = async (bot, message, args) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "force"`)
     lockedUser = message.mentions[0]
+    let type = args[1]
+    if (!type){
+        type = typeConvert[await getType()]
+    }
+    if (!lockedUser){
+        type = args[0]
+    }
     let statsCollection = bot.database.collection('stats')
     let channel = bot.getChannel("779081002311352370") // Public
     //let channel = bot.getChannel("633920642605121578") // Testing
-    let type = typeConvert[await getType()]
     let randomString = makeString(6)
     let embed = spawnGift(type)
-    embed.description = `${lockedUser.mention} Use \`tlclaim ${randomString}\` to claim the gift`
+    if (lockedUser){
+        embed.description = `${lockedUser.mention} Use \`tlclaim ${randomString}\` to claim the gift`
+    }else{
+        embed.description = `Use \`tlclaim ${randomString}\` to claim the gift`
+    }
     let spawnMessage = await channel.createMessage({embed: embed})
-    let responses = await channel.awaitMessages(m => m.content.toLowerCase() === `tlclaim ${randomString}` && m.author == lockedUser, { time: ms('5m'), maxMatches: 1 });    
+    let responses = null
+    if (lockedUser){
+        responses = await channel.awaitMessages(m => m.content.toLowerCase() === `tlclaim ${randomString}` && m.author.id == lockedUser.id, { time: ms('5m'), maxMatches: 1 });
+    }else{
+        responses = await channel.awaitMessages(m => m.content.toLowerCase() === `tlclaim ${randomString}`, { time: ms('5m'), maxMatches: 1 });
+    }
     if (responses.length){
         try{
             await responses[0].delete()
