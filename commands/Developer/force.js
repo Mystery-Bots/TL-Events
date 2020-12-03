@@ -57,7 +57,7 @@ function claimedGift(type, user){
     return embed
 } 
 
-module.exports.Run = async function(bot, message){
+module.exports.Run = async (bot, message){
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "force"`)
     let statsCollection = bot.database.collection('stats')
     let channel = bot.getChannel("779081002311352370") // Public
