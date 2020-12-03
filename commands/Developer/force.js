@@ -59,7 +59,7 @@ function claimedGift(type, user){
 
 module.exports.run = async (bot, message) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "force"`)
-    lockedUser = message.mention[0]
+    lockedUser = message.mentions[0]
     let statsCollection = bot.database.collection('stats')
     let channel = bot.getChannel("779081002311352370") // Public
     //let channel = bot.getChannel("633920642605121578") // Testing
