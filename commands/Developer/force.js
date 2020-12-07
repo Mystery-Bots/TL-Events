@@ -61,15 +61,17 @@ module.exports.run = async (bot, message, args) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "force"`)
     lockedUser = message.mentions[0]
     let type = args[1]
-    if (!type){
-        type = typeConvert[await getType()]
-    }
+    console.log(args[1])
     if (!lockedUser){
         type = args[0]
     }
+    if (!type){
+        type = typeConvert[await getType()]
+        console.log(type)
+    }
     let statsCollection = bot.database.collection('stats')
-    let channel = bot.getChannel("779081002311352370") // Public
-    //let channel = bot.getChannel("633920642605121578") // Testing
+    //let channel = bot.getChannel("779081002311352370") // Public
+    let channel = bot.getChannel("633920642605121578") // Testing
     let randomString = makeString(6)
     let embed = spawnGift(type)
     if (lockedUser){
