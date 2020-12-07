@@ -70,8 +70,8 @@ module.exports.run = async (bot, message, args) => {
         console.log(type)
     }
     let statsCollection = bot.database.collection('stats')
-    //let channel = bot.getChannel("779081002311352370") // Public
-    let channel = bot.getChannel("633920642605121578") // Testing
+    let channel = bot.getChannel("779081002311352370") // Public
+    //let channel = bot.getChannel("633920642605121578") // Testing
     let randomString = makeString(6)
     let embed = spawnGift(type)
     if (lockedUser){
