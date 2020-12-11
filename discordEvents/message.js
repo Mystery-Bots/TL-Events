@@ -64,7 +64,12 @@ module.exports.Run = async function(bot,message){
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
-			return message.channel.createMessage(`This command has already been run. Please wait ${ms(timeLeft, {long:true})} before running again.`)
+			if (info.category != "Hidden"){
+				return message.channel.createMessage(`This command has already been run. Please wait ${ms(timeLeft, {long:true})} before running again.`)
+			}
+			else{
+				return message.delete()
+			}
 		}
 	}
 
