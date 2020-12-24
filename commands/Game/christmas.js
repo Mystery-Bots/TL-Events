@@ -28,8 +28,7 @@ module.exports.run = async (bot, message, args) => {
             "totalepic": 20
         }}
         gifts = 20
-}
-    if (0 <= rankings.findIndex(x => x.userID == userStats.userID) && rankings.findIndex(x => x.userID == userStats.userID) <= 2){
+    }else if (0 <= rankings.findIndex(x => x.userID == userStats.userID) && rankings.findIndex(x => x.userID == userStats.userID) <= 2){
         userUpdateDoc = {$inc:{
             "epic": 3,
             "totalPoints": (5*3),
