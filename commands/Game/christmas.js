@@ -88,6 +88,6 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.info = {
     name: "christmas",
-    description: "Claim your chrsitmas gift from TheMystery",
+    description: "Claim your christmas gift from TheMystery",
     category: "Game",
 }
