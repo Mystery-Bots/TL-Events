@@ -12,6 +12,7 @@ module.exports.run = async (bot, message, args) => {
     let statsCollection = bot.database.collection('stats')
     let rankings = await usercollection.find().sort({totalPoints:-1}).toArray()
     let userStats = await usercollection.findOne({"userID":message.author.id})
+    let gifts = 0
     if(rankings.findIndex(x => x.userID == userStats.userID) < 0){
         userUpdateDoc = {$set:{
             "userID": message.author.id,
@@ -26,6 +27,7 @@ module.exports.run = async (bot, message, args) => {
             "totalChristmas": 20,
             "totalepic": 20
         }}
+        gifts = 20
 }
     if (0 <= rankings.findIndex(x => x.userID == userStats.userID) && rankings.findIndex(x => x.userID == userStats.userID) <= 2){
         userUpdateDoc = {$inc:{
@@ -37,6 +39,7 @@ module.exports.run = async (bot, message, args) => {
             "totalChristmas": 3,
             "totalepic": 3
         }}
+        gifts = 3
     }else if(3<= rankings.findIndex(x => x.userID == userStats.userID) && rankings.findIndex(x => x.userID == userStats.userID) <=6){
         userUpdateDoc = {$inc:{
             "epic": 10,
@@ -47,6 +50,7 @@ module.exports.run = async (bot, message, args) => {
             "totalChristmas": 10,
             "totalepic": 10
         }}
+        gifts = 10
     }else if(7<= rankings.findIndex(x => x.userID == userStats.userID) && rankings.findIndex(x => x.userID == userStats.userID) <=12){
         userUpdateDoc = {$inc:{
             "epic": 12,
@@ -67,6 +71,7 @@ module.exports.run = async (bot, message, args) => {
             "totalChristmas": 15,
             "totalepic": 15
         }}
+        gifts = 15
     }else if(26<= rankings.findIndex(x => x.userID == userStats.userID)){
         userUpdateDoc = {$inc:{
             "epic": 20,
@@ -77,13 +82,14 @@ module.exports.run = async (bot, message, args) => {
             "totalChristmas": 20,
             "totalepic": 20
         }}
+        gifts = 20
     }
     if(userStats != null){
         if(userStats.claimedChristmas) return message.channel.createMessage("You have already claimed your christmas gifts")
     }
     await statsCollection.updateOne({_id:'5fb5896be09eb535b97403be'},statsUpdateDoc)
     await usercollection.updateOne({userID: message.author.id}, userUpdateDoc, {upsert:true}); 
-    message.channel.createMessage(`${message.author.mention}, You have claimed your christmas gifts`)
+    message.channel.createMessage(`${message.author.mention}, You have claimed your ${gifts} epic christmas gifts`)
 }
 
 module.exports.info = {
