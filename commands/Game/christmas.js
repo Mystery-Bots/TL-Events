@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     let rankings = await usercollection.find().sort({totalPoints:-1}).toArray()
     let userStats = await usercollection.findOne({"userID":message.author.id})
     let gifts = 0
-    if(rankings.findIndex(x => x.userID == userStats.userID) < 0){
+    if(!userStats){
         userUpdateDoc = {$set:{
             "userID": message.author.id,
             "username":`${message.author.username}#${message.author.discriminator}`,
