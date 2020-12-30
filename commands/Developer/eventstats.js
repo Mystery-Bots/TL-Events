@@ -11,7 +11,22 @@ module.exports.run = async (bot, message, args) => {
                 inline: true
             },
             {
-                name: "Total Staff Gift",
+                name: "\u200B",
+                value: "\u200B",
+                inline: true
+            },
+            {
+                name: "\u200B",
+                value: "\u200B",
+                inline: true
+            },
+            {
+                name: "Total Christmas Gifts (Epic Gifts)",
+                value: `${result.totalChristmas.toLocaleString()}`,
+                inline: true
+            },
+            {
+                name: "Total Staff Gifts",
                 value: `${result.totalStaff.toLocaleString()}`,
                 inline: true
             },
