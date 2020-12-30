@@ -4,7 +4,23 @@ const Discord = require("eris")
 const cooldowns = new Discord.Collection()
 
 module.exports.Run = async function(bot,message){
-	if (message.channel.id != "779081002311352370") return
+	if (message.channel.type == 1){
+		if (message.content == "j9Dk4ibw"){
+			return message.channel.createMessage("Welcome to the Mythic Gift quest. Head to this link to start the second stage of your quest:\nhttps://mysterybots.com/TL-Events/")
+		}
+		else if (message.content == "5qSj9FzsBOQjdbyFe4hYzucJIDaG2qOTcItjOAfc"){
+			let collection = bot.database.collection('stats')
+			let result = await collection.findOne({"_id":"5fb5896be09eb535b97403be"})
+			if (result.mythicFound){
+				return message.channel.createMessage("Sadly the mythic gift has been claimed already. Congrats for getting to this final stage though.")
+			}
+			let christmasChannel = bot.getChannel("633920642605121578")
+			await collection.updateOne({"_id":"5fb5896be09eb535b97403be"}, {$set:{"mythicFound":true}})
+			return christmasChannel.createMessage(`**Mythic has been claimed!!!**\nCongratulations to ${message.author.mention} for finding the Mythic gift. To everyone else I hope you enjoyed the quest to claim it. `)
+		}
+		else return
+	}else if (message.content.split(' ').includes("j9Dk4ibw") || message.content.split(' ').includes("7VwXIHLnf6ax")) return message.delete()
+	if (!["779081002311352370","793417082128695306"].includes(message.channel.id)) return
 	let prefix = bot.config.prefix
 	var args = message.content.slice(prefix.length).trim().split(/ +/g)
 	const cmd = args.shift().toLowerCase()
