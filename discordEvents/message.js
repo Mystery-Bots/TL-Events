@@ -6,7 +6,7 @@ const cooldowns = new Discord.Collection()
 module.exports.Run = async function(bot,message){
 	if (message.channel.type == 1){
 		if (message.content == "j9Dk4ibw"){
-			return message.channel.createMessage("Welcome to the Mythic Gift quest. Head to this link to start the second stage of your quest:\nhttps://themystery.me/TL-Events/")
+			return message.channel.createMessage("Welcome to the Mythic Gift quest. Head to this link to start the second stage of your quest:\nhttps://themystery.me/TL-Events")
 		}
 		else if (message.content == "5qSj9FzsBOQjdbyFe4hYzucJIDaG2qOTcItjOAfc"){
 			let collection = bot.database.collection('stats')
