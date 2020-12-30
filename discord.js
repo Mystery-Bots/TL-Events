@@ -14,18 +14,18 @@ client.connect().then(connection => {
 
 
 const bot = new Discord.Client(config.discord.token, {
-	intents:515,
+	intents:4611,
 	compress: true,
 	guildSubscriptions:false,
 	messageLimit:0,
 	largeThreshold: 0,
-	disableEvents: [
-		'MESSAGE_DELETE',
-		'MESSAGE_DELETE_BULK',
-		'MESSAGE_UPDATE',
-		'USER_UPDATE',
-		'VOICE_SERVER_UPDATE'
-	],
+	disableEvents: {
+		'MESSAGE_DELETE':true,
+		'MESSAGE_DELETE_BULK':true,
+		'MESSAGE_UPDATE':true,
+		'USER_UPDATE':true,
+		'VOICE_SERVER_UPDATE':true
+	},
 });
 
 bot.config = config.discord;
