@@ -14,7 +14,7 @@ module.exports.Run = async function(bot,message){
 			if (result.mythicFound){
 				return message.channel.createMessage("Sadly the mythic gift has been claimed already. Congrats for getting to this final stage though.")
 			}
-			let christmasChannel = bot.getChannel("633920642605121578")
+			let christmasChannel = bot.getChannel("779081002311352370")
 			await collection.updateOne({"_id":"5fb5896be09eb535b97403be"}, {$set:{"mythicFound":true}})
 			return christmasChannel.createMessage(`**Mythic has been claimed!!!**\nCongratulations to ${message.author.mention} for finding the Mythic gift. To everyone else I hope you enjoyed the quest to claim it. `)
 		}
