@@ -1,5 +1,3 @@
-
-
 module.exports.run = async (bot, message, args) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "reload"`)
     const commandName = args[0].toLowerCase();
