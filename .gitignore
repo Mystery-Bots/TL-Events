@@ -2,3 +2,5 @@
 /config.js
 /assets/
 /.vscode/
+discordEvents/interactionCreate.js
+discordEvents/codeMessages.js
