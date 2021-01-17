@@ -4,11 +4,11 @@ const { sep } = require("path");
 let config = require("./config");
 const ms = require("ms");
 const moment = require("moment");
-const MongoClient = require('mongodb').MongoClient
+const MongoClient = require('mongodb').MongoClient;
 
 const client = new MongoClient(config.database, {useUnifiedTopology: true});
 client.connect().then(connection => {
-	database = connection.db("christmas")
+	database = connection.db("TL-Events")
 	bot.database = database
 })
 
@@ -95,7 +95,9 @@ bot
 	})
 	.on("messageCreate", (message) => {
 		require('./discordEvents/message').Run(bot, message)
-		//require('./services/spawn').Run(bot, message)
+	})
+	.on("interactionCreate",(interaction) => {
+		require('./discordEvents/interactionCreate').Run(bot,interaction)
 	})
 
 setTimeout(async() => {
