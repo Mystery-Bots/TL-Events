@@ -62,8 +62,7 @@ module.exports.run = (bot, message, args) => {
 
 		try {
 			if (dir.size === 0) return
-			else if (category == "Developer" || category == "Hidden") {
-				
+			else if (category == "Hidden") {
 				return
 			}
 			else {
