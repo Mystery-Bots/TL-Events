@@ -14,7 +14,7 @@ client.connect().then(connection => {
 
 
 const bot = new Discord.Client(config.discord.token, {
-	intents:4611,
+	intents:5635,
 	compress: true,
 	guildSubscriptions:false,
 	messageLimit:0,
