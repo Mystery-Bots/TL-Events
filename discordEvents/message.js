@@ -89,14 +89,7 @@ module.exports.Run = async function (bot, message) {
 
 		if (now < expirationTime) {
 			const timeLeft = expirationTime - now;
-			if (info.name == "claim") {
-				return message.channel.createMessage(
-					`You have already claimed your daily Eggs. Please wait ${ms(
-						timeLeft,
-						{ long: true }
-					)} before claiming again.`
-				);
-			} else if (info.category != "Hidden") {
+			if (info.category != "Hidden") {
 				return message.channel.createMessage(
 					`You have already run this command. Please wait ${ms(
 						timeLeft,
