@@ -38,9 +38,14 @@ module.exports.run = async (bot, message, args) => {
 	if (randomChance <= 15) {
 		playerStats.collectedEggs -= (randomEggs - 5);
 		if (playerStats.collectedEggs < 0) {
-			playerStats.collectedEggs = 0;
-			playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
-			collectionMessage = `Oh no ${user.mention}, you lost the rest of your collected eggs.`;
+			if (playerStats.collectedEggs == 0){
+				collectionMessage = `${user.mention}, Luckily you didn't have any eggs to lose.`;
+			}
+			else {
+				playerStats.collectedEggs = 0;
+				playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
+				collectionMessage = `Oh no ${user.mention}, you lost the rest of your collected eggs.`;
+			}
 		} else {
 			playerStats.totalEggs -= (randomEggs - 5)
 			collectionMessage = `Oh no ${user.mention}, you dropped **${
