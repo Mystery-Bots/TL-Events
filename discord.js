@@ -1,4 +1,4 @@
-const Discord = require("eris");
+const Discord = require("eris-additions")(require("eris"));
 const { readdirSync } = require("fs");
 const { sep } = require("path");
 let config = require("./config");
