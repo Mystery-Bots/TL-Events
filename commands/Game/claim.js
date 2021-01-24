@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
 	if (playerStats.lastCollected != 0){
 		if (!moment().isAfter(moment(playerStats.lastCollected).add(1,'day'))){
 			let timeLeft = moment(playerStats.lastCollected).add(1,'day').subtract(moment())
-			return message.channel.createMessage(`You have already claimed your daily Eggs. Please wait ${ms(timeLeft.valueOf(),{ long: true })} before claiming again.`);
+			return message.channel.createMessage(`You have already claimed your daily eggs. Please wait ${ms(timeLeft.valueOf(),{ long: true })} before claiming again.`);
 		}
 	}
 	let collectionMessage;
