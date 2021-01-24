@@ -55,7 +55,6 @@ module.exports.run = async (bot, message, args) => {
 		collectionMessage = `Congrats ${user.mention}, you found **${randomEggs}** eggs.`;
 	}
 	if (moment().isBefore(moment(playerStats.lastCollected).add(2,'day'))){
-		console.log("was before")
 		if ((playerStats.streak + 1) % 7 == 0) {
 			streakMessage = `Congrats you reached your daily streak. You have been rewarded **50** Eggs\nYour daily streak has been reset to 0/7`;
 			playerStats.lastCollected = moment().valueOf()
