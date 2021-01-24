@@ -1,5 +1,6 @@
 const config = require("../../config");
 const moment = require("moment");
+const ms = require('ms')
 
 function userTemplate(user) {
 	let secrets = config.secrets;
@@ -26,6 +27,12 @@ module.exports.run = async (bot, message, args) => {
 	if (!playerStats) {
 		playerStats = userTemplate(user);
 	}
+	if (playerStats.lastCollected != 0){
+		if (!moment().isAfter(moment(playerStats.lastCollected).add(1,'day'))){
+			let timeLeft = moment(playerStats.lastCollected).add(1,'day').subtract(moment())
+			return message.channel.createMessage(`You have already claimed your daily Eggs. Please wait ${ms(timeLeft.valueOf(),{ long: true })} before claiming again.`);
+		}
+	}
 	let collectionMessage;
 	let streakMessage;
 	if (randomChance <= 15) {
@@ -47,7 +54,7 @@ module.exports.run = async (bot, message, args) => {
 		playerStats.totalEggs += randomEggs
 		collectionMessage = `Congrats ${user.mention}, you found **${randomEggs}** eggs.`;
 	}
-	if (moment().isBefore(moment(playerStats.lastCollected).add(1,'day'))){
+	if (moment().isBefore(moment(playerStats.lastCollected).add(2,'day'))){
 		console.log("was before")
 		if ((playerStats.streak + 1) % 7 == 0) {
 			streakMessage = `Congrats you reached your daily streak. You have been rewarded **50** Eggs\nYour daily streak has been reset to 0/7`;
@@ -82,5 +89,4 @@ module.exports.info = {
 	name: "claim",
 	description: "Claim your daily eggs",
 	category: "Game",
-	cooldown: "1d",
 };
