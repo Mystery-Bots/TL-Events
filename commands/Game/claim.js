@@ -5,6 +5,7 @@ function userTemplate(user) {
 	let secrets = config.secrets;
 	let template = {
 		userID: user.id,
+		username: user.username,
 		staffEggs: 0,
 		foundEggs: 0,
 		collectedEggs: 0,
