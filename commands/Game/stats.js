@@ -34,9 +34,7 @@ module.exports.run = async (bot, message, args) => {
 	embed = {
 		title: `${user.username}'s Stats`,
 		color: user.color,
-		description: `ID: ${user.id}\n**Ranking:** ${placing}${
-			medals[placing] ? medals[placing] : ""
-        }\n\n**Total Eggs:** ${userResult.totalEggs.toLocaleString()}\nCollected Eggs: ${userResult.collectedEggs.toLocaleString()}\nFound Eggs: ${userResult.foundEggs.toLocaleString()}\nStaff Eggs: ${userResult.staffEggs.toLocaleString()}\n\nStreak Total: ${userResult.streak.toLocaleString()}`,
+		description: `ID: ${user.id}\nPassive Mode: ${userResult.passive ? "Active" : "Inactive"}\n**Ranking:** ${placing}${medals[placing] ? medals[placing] : ""}\n\n**Total Eggs:** ${userResult.totalEggs.toLocaleString()}\nCollected Eggs: ${userResult.collectedEggs.toLocaleString()}\nFound Eggs: ${userResult.foundEggs.toLocaleString()}\nStaff Eggs: ${userResult.staffEggs.toLocaleString()}\n\nStreak Total: ${userResult.streak.toLocaleString()}`,
         footer: {
             text:"Last collected"
         },
