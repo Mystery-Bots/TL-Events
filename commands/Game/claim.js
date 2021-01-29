@@ -20,7 +20,7 @@ function userTemplate(user) {
 
 module.exports.run = async (bot, message, args) => {
 	let user = message.author;
-	let randomEggs = Math.floor(Math.random() * (20 - 10 + 1) + 10);
+	let randomEggs = Math.floor(Math.random() * (60 - 40 + 1) + 40);
 	let randomChance = Math.floor(Math.random() * (100 - 1 + 1) + 1);
 	let playerCollection = bot.database.collection("players");
 	let playerStats = await playerCollection.findOne({ userID: user.id });
@@ -55,9 +55,15 @@ module.exports.run = async (bot, message, args) => {
 	} else if (randomChance > 15 && randomChance <= 40) {
 		collectionMessage = `Sadly ${user.mention}, didn't find any eggs.`;
 	} else if (randomChance > 40) {
-		playerStats.collectedEggs += randomEggs;
-		playerStats.totalEggs += randomEggs
-		collectionMessage = `Congrats ${user.mention}, you found **${randomEggs}** eggs.`;
+		if (user.passive){
+			playerStats.collectedEggs += (randomEggs/2);
+			playerStats.totalEggs += (randomEggs/2)
+			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs/2}** eggs.`;
+		}else{
+			playerStats.collectedEggs += randomEggs;
+			playerStats.totalEggs += randomEggs
+			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs}** eggs.`;
+		}
 	}
 	if (moment().isBefore(moment(playerStats.lastCollected).add(2,'day'))){
 		if ((playerStats.streak + 1) % 7 == 0) {
