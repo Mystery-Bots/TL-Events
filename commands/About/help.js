@@ -58,7 +58,7 @@ module.exports.run = (bot, message, args) => {
 	].join("\n")
 	categories.forEach(category => {
 		const dir = bot.commands.filter(c => c.info.category.toLowerCase() === category.toLowerCase())
-		const capitalise = category.slice(0, 1).toUpperCase() + category.slice(1)
+		const capitalize = category.slice(0, 1).toUpperCase() + category.slice(1)
 
 		try {
 			if (dir.size === 0) return
@@ -66,7 +66,7 @@ module.exports.run = (bot, message, args) => {
 				return
 			}
 			else {
-				embedObject.embed.fields.push({name:`❯ ${capitalise}`, value: dir.map(c => `\`${c.info.name}\``).join(", ")})
+				embedObject.embed.fields.push({name:`❯ ${capitalize}`, value: dir.map(c => `\`${c.info.name}\``).join(", ")})
 			}
 		}
 		catch (e) {
