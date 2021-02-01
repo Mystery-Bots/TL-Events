@@ -9,9 +9,11 @@ module.exports.run = async (bot, message, args) => {
 		let eggs = Math.floor(Math.random() * (30 - 10 + 1) + 10);
 		if (user.passive){
 			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(eggs/2)}})
+			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(eggs/2)}})
 			return message.channel.createMessage(`Congrats managed to find ${eggs/2} eggs`)
 		}else{
-			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":eggs}})
+			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(eggs/2)}})
+			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(eggs/2)}})
 			return message.channel.createMessage(`Congrats managed to find ${eggs} eggs`)
 		}
 	}else{

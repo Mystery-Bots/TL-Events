@@ -12,13 +12,17 @@ module.exports.run = async (bot, message, args) => {
 	if (chance <= 10){
 		let eggs = Math.floor(targetUser.collectedEggs*.1)
 		await collection.updateOne({"userID":userMention.id},{$inc:{"collectedEggs":-eggs}})
+		await collection.updateOne({"userID":userMention.id},{$inc:{"totalEggs":-eggs}})
 		await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":eggs}})
+		await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":eggs}})
 		return message.channel.createMessage(`Congrats you managed to steal ${eggs} eggs from ${userMention.username}`)
 
 	}else if (chance > 10 && chance < 41){
 		let eggs = Math.floor(user.collectedEggs*.05)
 		await collection.updateOne({"userID":userMention.id},{$inc:{"collectedEggs":eggs}})
+		await collection.updateOne({"userID":userMention.id},{$inc:{"totalEggs":eggs}})
 		await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":-eggs}})
+		await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":-eggs}})
 		return message.channel.createMessage(`Oops you got caught and had to give ${eggs} eggs to ${userMention.username}`)
 	}else{
 		return message.channel.createMessage(`Sadly you weren't able to rob ${userMention.username}`)
