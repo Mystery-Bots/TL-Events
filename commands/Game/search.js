@@ -12,8 +12,8 @@ module.exports.run = async (bot, message, args) => {
 			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(eggs/2)}})
 			return message.channel.createMessage(`Congrats managed to find ${eggs/2} eggs`)
 		}else{
-			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(eggs/2)}})
-			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(eggs/2)}})
+			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(eggs)}})
+			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(eggs)}})
 			return message.channel.createMessage(`Congrats managed to find ${eggs} eggs`)
 		}
 	}else{

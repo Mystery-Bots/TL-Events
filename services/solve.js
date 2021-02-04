@@ -18,8 +18,8 @@ module.exports.Run = async function (bot){
 				await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(10/2)}})
 				await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(10/2)}})
 			}else{
-				await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(10/2)}})
-				await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(10/2)}})
+				await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(10)}})
+				await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(10)}})
 			}
 		}
 		else{
