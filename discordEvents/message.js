@@ -4,6 +4,42 @@ const codes = require("./codeMessages").codes;
 
 const cooldowns = new Discord.Collection();
 
+function checkCooldown(info, message){
+	//Command cooldowns
+	if (!cooldowns.has(info.name)) {
+		cooldowns.set(info.name, new Discord.Collection());
+	}
+
+	const now = Date.now();
+	const timestamps = cooldowns.get(info.name);
+
+	if (timestamps.has(message.author.id)) {
+		const expirationTime =
+			timestamps.get(message.author.id) + cooldownAmount;
+
+		if (now < expirationTime) {
+			const timeLeft = expirationTime - now;
+			if (info.category != "Hidden") {
+				return message.channel.createMessage(
+					`You have already run this command. Please wait ${ms(
+						timeLeft,
+						{ long: true }
+					)} before running again.`
+				);
+			} else {
+				return message.delete();
+			}
+		}
+	}
+}
+
+function assignCooldown(info, message){
+	const now = Date.now();
+	const cooldownAmount = ms(info.cooldown || 0); //info.cooldown * 1000
+	timestamps.set(message.author.id, now);
+	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+}
+
 module.exports.Run = async function (bot, message) {
 	if (message.channel.type == 0) {
 		if (message.content.split(" ").some((r) => codes.includes(r))) {
@@ -74,39 +110,11 @@ module.exports.Run = async function (bot, message) {
 		}
 		return message.channel.createMessage(reply);
 	}
-	//Command cooldowns
-	if (!cooldowns.has(info.name)) {
-		cooldowns.set(info.name, new Discord.Collection());
-	}
-
-	const now = Date.now();
-	const timestamps = cooldowns.get(info.name);
-	const cooldownAmount = ms(info.cooldown || 0); //info.cooldown * 1000
-
-	if (timestamps.has(message.author.id)) {
-		const expirationTime =
-			timestamps.get(message.author.id) + cooldownAmount;
-
-		if (now < expirationTime) {
-			const timeLeft = expirationTime - now;
-			if (info.category != "Hidden") {
-				return message.channel.createMessage(
-					`You have already run this command. Please wait ${ms(
-						timeLeft,
-						{ long: true }
-					)} before running again.`
-				);
-			} else {
-				return message.delete();
-			}
-		}
-	}
-
-	timestamps.set(message.author.id, now);
-	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 	try {
 		//Run command.
+		checkCooldown(info, message)
 		await command.run(bot, message, args);
+		assignCooldown(info, message)
 	} catch (error) {
 		console.log(error);
 	}
