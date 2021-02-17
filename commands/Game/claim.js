@@ -36,14 +36,18 @@ module.exports.run = async (bot, message, args) => {
 	let collectionMessage;
 	let streakMessage;
 	if (randomChance <= 15) {
+		currentEggs = playerCollection.collectedEggs
 		playerStats.collectedEggs -= (randomEggs - 5);
 		if (playerStats.collectedEggs < 0) {
-			if (playerStats.collectedEggs == 0){
+			if (currentEggs == 0){
+				playerStats.collectedEggs = 0
 				collectionMessage = `${user.mention}, Luckily you didn't have any eggs to lose.`;
 			}
 			else {
 				playerStats.collectedEggs = 0;
-				playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
+				if (totalEggs != 0){
+					playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
+				}
 				collectionMessage = `Oh no ${user.mention}, you lost the rest of your collected eggs.`;
 			}
 		} else {
