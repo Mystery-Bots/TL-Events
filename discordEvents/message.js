@@ -12,6 +12,7 @@ function checkCooldown(info, message){
 
 	const now = Date.now();
 	const timestamps = cooldowns.get(info.name);
+	const cooldownAmount = ms(info.cooldown || 0); //info.cooldown * 1000
 
 	if (timestamps.has(message.author.id)) {
 		const expirationTime =
@@ -20,14 +21,16 @@ function checkCooldown(info, message){
 		if (now < expirationTime) {
 			const timeLeft = expirationTime - now;
 			if (info.category != "Hidden") {
-				return message.channel.createMessage(
+				message.channel.createMessage(
 					`You have already run this command. Please wait ${ms(
 						timeLeft,
 						{ long: true }
 					)} before running again.`
 				);
+				return true
 			} else {
-				return message.delete();
+				message.delete();
+				return true
 			}
 		}
 	}
@@ -36,6 +39,7 @@ function checkCooldown(info, message){
 function assignCooldown(info, message){
 	const now = Date.now();
 	const cooldownAmount = ms(info.cooldown || 0); //info.cooldown * 1000
+	const timestamps = cooldowns.get(info.name);
 	timestamps.set(message.author.id, now);
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 }
@@ -112,7 +116,8 @@ module.exports.Run = async function (bot, message) {
 	}
 	try {
 		//Run command.
-		checkCooldown(info, message)
+		let a = checkCooldown(info, message)
+		if (a) return
 		await command.run(bot, message, args);
 		assignCooldown(info, message)
 	} catch (error) {
