@@ -6,9 +6,23 @@ module.exports.run = async (bot, message, args) => {
 	let collection = bot.database.collection('players')
 	let targetUser = await collection.findOne({"userID":userMention.id})
 	let user = await collection.findOne({"userID":message.author.id})
-	if (!user) return message.channel.createMessage(`${message.author.mention} please run \`tlclaim\` to create an account`)
-	if (targetUser.passive) return message.channel.createMessage(`${userMention.username} is set to passive mode and can't be robbed.`)
-	if (user.passive) return message.channel.createMessage(`You are set to passive mode and can't rob people.`)
+	if (!user) {
+		message.channel.createMessage(`${message.author.mention} please run \`tlclaim\` to create an account`)
+		throw Error("no account exits")
+
+	}
+	if (!targetUser){
+		message.channel.createMessage(`${userMention.username} doesn't have an account`)
+		throw Error("no account exits")
+	}
+	if (targetUser.passive) {
+		message.channel.createMessage(`${userMention.username} is set to passive mode and can't be robbed.`)
+		throw Error("passive mode was active")
+	}
+	if (user.passive) {
+		message.channel.createMessage(`You are set to passive mode and can't rob people.`)
+		throw Error("passive mode was active")
+	}
 	if (chance <= 10){
 		let eggs = Math.floor(targetUser.collectedEggs*.1)
 		await collection.updateOne({"userID":userMention.id},{$inc:{"collectedEggs":-eggs}})
