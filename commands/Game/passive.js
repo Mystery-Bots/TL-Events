@@ -15,5 +15,5 @@ module.exports.info = {
     name: "passive",
     description: "Sets your profile to passive mode",
     category: "Game",
-    cooldown: "20s"
+    cooldown: "5h"
 }
