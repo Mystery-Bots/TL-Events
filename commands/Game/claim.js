@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args) => {
 	let playerStats = await playerCollection.findOne({ userID: user.id });
 	if (!playerStats) {
 		playerStats = userTemplate(user);
-		await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"totalPlayer":1}})
+		await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"totalPlayers":1}})
 	}
 	if (playerStats.lastCollected != 0){
 		if (!moment().isAfter(moment(playerStats.lastCollected).add(1,'day'))){
