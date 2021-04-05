@@ -22,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
 		throw Error("passive mode was active")
 	}
 	if (user.passive) {
-		message.channel.createMessage(`You are set to passive mode and can't rob people.`)
+		message.channel.createMessage({content:`You are set to passive mode and can't rob people.`})
 		throw Error("passive mode was active")
 	}
 	if (chance <= 10){
@@ -31,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
 		await collection.updateOne({"userID":userMention.id},{$inc:{"totalEggs":-eggs}})
 		await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":eggs}})
 		await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":eggs}})
-		return message.channel.createMessage(`Congrats you managed to steal ${eggs} eggs from ${userMention.username}`)
+		return message.channel.createMessage({content:`Congrats you managed to steal ${eggs} eggs from ${userMention.username}`,messageReferenceID:message.id})
 
 	}else if (chance > 10 && chance < 41){
 		let eggs = Math.floor(user.collectedEggs*.05)
@@ -39,9 +39,9 @@ module.exports.run = async (bot, message, args) => {
 		await collection.updateOne({"userID":userMention.id},{$inc:{"totalEggs":eggs}})
 		await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":-eggs}})
 		await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":-eggs}})
-		return message.channel.createMessage(`Oops you got caught and had to give ${eggs} eggs to ${userMention.username}`)
+		return message.channel.createMessage({content:`Oops you got caught and had to give ${eggs} eggs to ${userMention.username}`})
 	}else{
-		return message.channel.createMessage(`Sadly you weren't able to rob ${userMention.username}`)
+		return message.channel.createMessage({content:`Sadly you weren't able to rob ${userMention.username}`,messageReferenceID:message.id})
 	}
 }
 
