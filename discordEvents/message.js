@@ -1,6 +1,5 @@
 const ms = require("ms");
 const Discord = require("eris");
-const codes = require("./codeMessages").codes;
 
 const cooldowns = new Discord.Collection();
 
@@ -45,12 +44,6 @@ function assignCooldown(info, message){
 }
 
 module.exports.Run = async function (bot, message) {
-	if (message.channel.type == 0) {
-		if (message.content.split(" ").some((r) => codes.includes(r))) {
-			await require("./codeMessages").Run(bot, message);
-		}
-	} else if (message.content.split(" ").some((r) => codes.includes(r)))
-		return message.delete();
 	if (!["825134567156351036"].includes(message.channel.id)) return;
 	let prefix = bot.config.prefix;
 	var args = message.content.slice(prefix.length).trim().split(/ +/g);
