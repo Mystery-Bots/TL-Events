@@ -38,19 +38,20 @@ module.exports.run = async (bot, message, args) => {
 	let collectionMessage;
 	let streakMessage;
 	if (randomChance <= 15) {
-		currentEggs = playerCollection.collectedEggs
+		let currentEggs = playerCollection.collectedEggs
 		playerStats.collectedEggs -= (randomEggs - 5);
 		if (playerStats.collectedEggs < 0) {
 			if (currentEggs == 0){
 				playerStats.collectedEggs = 0
 				collectionMessage = `${user.mention}, Luckily you didn't have any eggs to lose.`;
+				await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"timesCollected":1}})
 			}
 			else {
 				playerStats.collectedEggs = 0;
 				if (playerStats.totalEggs != 0){
 					playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
+					await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":-Math.abs(0 - (randomEggs - 5)), "timesCollected":1}})
 				}
-				await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":-Math.abs(0 - (randomEggs - 5))}})
 				collectionMessage = `Oh no ${user.mention}, you lost the rest of your collected eggs.`;
 			}
 		} else {
@@ -58,23 +59,24 @@ module.exports.run = async (bot, message, args) => {
 			collectionMessage = `Oh no ${user.mention}, you dropped **${
 				randomEggs - 5
 			}** eggs.`;
-			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs-5}})
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs-5, "timesCollected":1}})
 
 		}
 	} else if (randomChance > 15 && randomChance <= 40) {
 		collectionMessage = `Sadly ${user.mention}, didn't find any eggs.`;
+		await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"timesCollected":1}})
 	} else if (randomChance > 40) {
 		if (user.passive){
 			playerStats.collectedEggs += (randomEggs/2);
 			playerStats.totalEggs += (randomEggs/2)
 			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs/2}** eggs.`;
-			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs/2}})
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs/2, "timesCollected":1}})
 
 		}else{
 			playerStats.collectedEggs += randomEggs;
 			playerStats.totalEggs += randomEggs
 			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs}** eggs.`;
-			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs}})
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs, "timesCollected":1}})
 
 		}
 	}

@@ -9,15 +9,16 @@ module.exports.run = async (bot, message, args) => {
 		if (user.passive){
 			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(Math.floor(eggs/2))}})
 			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(Math.floor(eggs/2))}})
-			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":eggs/2}})
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":eggs/2, "timesCollected":1}})
 			return message.channel.createMessage(`Congrats, you managed to find ${Math.floor(eggs/2)} eggs`)
 		}else{
 			await collection.updateOne({"userID":message.author.id},{$inc:{"collectedEggs":(eggs)}})
 			await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":(eggs)}})
-			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":eggs}})
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":eggs, "timesCollected":1}})
 			return message.channel.createMessage(`Congrats, you managed to find ${eggs} eggs`)
 		}
 	}else{
+		await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"timesCollected":1}})
 		return message.channel.createMessage(`Sadly, you weren't able to find any eggs`)
 	}
 }
