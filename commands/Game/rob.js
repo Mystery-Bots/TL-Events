@@ -4,6 +4,11 @@ module.exports.run = async (bot, message, args) => {
 	let chance = Math.floor(Math.random() * (100 - 1 + 1) + 1)
 	let userMention = message.mentions[0]
 	let collection = bot.database.collection('players')
+	if (!userMention) {
+		message.channel.createMessage(`${message.author.mention} mention the person to rob`)
+		throw Error("no mention")
+
+	}
 	let targetUser = await collection.findOne({"userID":userMention.id})
 	let user = await collection.findOne({"userID":message.author.id})
 	if (!user) {
