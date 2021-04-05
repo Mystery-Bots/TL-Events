@@ -45,7 +45,7 @@ function assignCooldown(info, message){
 
 module.exports.Run = async function (bot, message) {
 	if ((message.content.split().includes('redeem') || message.content.split().includes('/redeem')) && ["825134567156351036"].includes(message.channel.id)) return message.delete()
-	if (!["799176819222773801"].includes(message.channel.id)) return;
+	if (!["825134567156351036"].includes(message.channel.id)) return;
 	let prefix = bot.config.prefix;
 	var args = message.content.slice(prefix.length).trim().split(/ +/g);
 	const cmd = args.shift().toLowerCase();
