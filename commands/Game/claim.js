@@ -23,9 +23,11 @@ module.exports.run = async (bot, message, args) => {
 	let randomEggs = Math.floor(Math.random() * (60 - 40 + 1) + 40);
 	let randomChance = Math.floor(Math.random() * (100 - 1 + 1) + 1);
 	let playerCollection = bot.database.collection("players");
+	let statsCollection = bot.database.collection('stats')
 	let playerStats = await playerCollection.findOne({ userID: user.id });
 	if (!playerStats) {
 		playerStats = userTemplate(user);
+		await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"totalPlayer":1}})
 	}
 	if (playerStats.lastCollected != 0){
 		if (!moment().isAfter(moment(playerStats.lastCollected).add(1,'day'))){
@@ -48,6 +50,7 @@ module.exports.run = async (bot, message, args) => {
 				if (totalEggs != 0){
 					playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
 				}
+				await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":-Math.abs(0 - (randomEggs - 5))}})
 				collectionMessage = `Oh no ${user.mention}, you lost the rest of your collected eggs.`;
 			}
 		} else {
@@ -55,6 +58,8 @@ module.exports.run = async (bot, message, args) => {
 			collectionMessage = `Oh no ${user.mention}, you dropped **${
 				randomEggs - 5
 			}** eggs.`;
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs-5}})
+
 		}
 	} else if (randomChance > 15 && randomChance <= 40) {
 		collectionMessage = `Sadly ${user.mention}, didn't find any eggs.`;
@@ -63,10 +68,14 @@ module.exports.run = async (bot, message, args) => {
 			playerStats.collectedEggs += (randomEggs/2);
 			playerStats.totalEggs += (randomEggs/2)
 			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs/2}** eggs.`;
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs/2}})
+
 		}else{
 			playerStats.collectedEggs += randomEggs;
 			playerStats.totalEggs += randomEggs
 			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs}** eggs.`;
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs}})
+
 		}
 	}
 	if (moment().isBefore(moment(playerStats.lastCollected).add(2,'day'))){
@@ -76,6 +85,7 @@ module.exports.run = async (bot, message, args) => {
 			playerStats.collectedEggs += 50
 			playerStats.totalEggs += 50
 			playerStats.streak ++
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"streaks":1}})
 		} else {
 			streakMessage = `Your daily streak has increased to ${
 				(playerStats.streak + 1) % 7

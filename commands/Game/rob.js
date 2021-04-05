@@ -1,5 +1,3 @@
-const { Collection } = require("eris")
-
 module.exports.run = async (bot, message, args) => {
 	let chance = Math.floor(Math.random() * (100 - 1 + 1) + 1)
 	let userMention = message.mentions[0]
