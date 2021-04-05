@@ -4,7 +4,7 @@ module.exports.run = async (bot, message, args) => {
 	let collection = bot.database.collection('players')
 	if (!userMention) {
 		message.channel.createMessage(`${message.author.mention} mention the person to rob`)
-		return
+		throw Error("no mention")
 	}
 	let targetUser = await collection.findOne({"userID":userMention.id})
 	let user = await collection.findOne({"userID":message.author.id})
