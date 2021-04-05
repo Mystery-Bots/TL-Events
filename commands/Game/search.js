@@ -1,6 +1,7 @@
 module.exports.run = async (bot, message, args) => {
 	let chance = Math.floor(Math.random() * (100 - 1 + 1) + 1)
 	let collection = bot.database.collection('players')
+	let statsCollection = bot.database.collection('stats')
 	let user = await collection.findOne({"userID":message.author.id})
 	if (!user)return message.channel.createMessage(`${message.author.mention} please run \`tlclaim\` to create an account`)
 	if (chance <= 70){
