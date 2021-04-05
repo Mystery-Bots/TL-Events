@@ -47,7 +47,7 @@ module.exports.run = async (bot, message, args) => {
 			}
 			else {
 				playerStats.collectedEggs = 0;
-				if (totalEggs != 0){
+				if (playerStats.totalEggs != 0){
 					playerStats.totalEggs -= Math.abs(0 - (randomEggs - 5))
 				}
 				await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":-Math.abs(0 - (randomEggs - 5))}})
