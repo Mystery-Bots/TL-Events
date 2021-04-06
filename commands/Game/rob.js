@@ -25,7 +25,7 @@ module.exports.run = async (bot, message, args) => {
 		message.channel.createMessage({content:`You are set to passive mode and can't rob people.`})
 		throw Error("passive mode was active")
 	}
-	if (chance <= 10){
+	if (chance <= 15){
 		let eggs = Math.floor(targetUser.collectedEggs*.1)
 		await collection.updateOne({"userID":userMention.id},{$inc:{"collectedEggs":-eggs}})
 		await collection.updateOne({"userID":userMention.id},{$inc:{"totalEggs":-eggs}})
@@ -33,7 +33,7 @@ module.exports.run = async (bot, message, args) => {
 		await collection.updateOne({"userID":message.author.id},{$inc:{"totalEggs":eggs}})
 		return message.channel.createMessage({content:`Congrats you managed to steal ${eggs} eggs from ${userMention.username}`,messageReferenceID:message.id})
 
-	}else if (chance > 10 && chance < 41){
+	}else if (chance > 15 && chance < 31){
 		let eggs = Math.floor(user.collectedEggs*.05)
 		await collection.updateOne({"userID":userMention.id},{$inc:{"collectedEggs":eggs}})
 		await collection.updateOne({"userID":userMention.id},{$inc:{"totalEggs":eggs}})
