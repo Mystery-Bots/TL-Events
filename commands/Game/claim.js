@@ -70,8 +70,8 @@ module.exports.run = async (bot, message, args) => {
 		if (playerStats.passive){
 			playerStats.collectedEggs += (randomEggs/2);
 			playerStats.totalEggs += (randomEggs/2)
-			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs/2}** eggs.`;
-			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":randomEggs/2, "timesCollected":1}})
+			collectionMessage = `Congrats ${user.mention}, you found **${Math.floor(randomEggs/2)}** eggs.`;
+			await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"collectedEggs":Math.floor(randomEggs/2), "timesCollected":1}})
 
 		}else{
 			playerStats.collectedEggs += randomEggs;
