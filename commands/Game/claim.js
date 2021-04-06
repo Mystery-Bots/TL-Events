@@ -7,6 +7,7 @@ function userTemplate(user) {
 	let template = {
 		userID: user.id,
 		username: user.username,
+		passive: false,
 		staffEggs: 0,
 		foundEggs: 0,
 		collectedEggs: 0,
@@ -38,7 +39,7 @@ module.exports.run = async (bot, message, args) => {
 	let collectionMessage;
 	let streakMessage;
 	if (randomChance <= 15) {
-		let currentEggs = playerCollection.collectedEggs
+		let currentEggs = playerStats.collectedEggs
 		playerStats.collectedEggs -= (randomEggs - 5);
 		if (playerStats.collectedEggs < 0) {
 			if (currentEggs == 0){
@@ -66,7 +67,7 @@ module.exports.run = async (bot, message, args) => {
 		collectionMessage = `Sadly ${user.mention}, didn't find any eggs.`;
 		await statsCollection.updateOne({"_id":"600608c92fe331ec1a128a1f"}, {$inc:{"timesCollected":1}})
 	} else if (randomChance > 40) {
-		if (user.passive){
+		if (playerStats.passive){
 			playerStats.collectedEggs += (randomEggs/2);
 			playerStats.totalEggs += (randomEggs/2)
 			collectionMessage = `Congrats ${user.mention}, you found **${randomEggs/2}** eggs.`;
