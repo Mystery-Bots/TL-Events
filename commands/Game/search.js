@@ -3,7 +3,10 @@ module.exports.run = async (bot, message, args) => {
 	let collection = bot.database.collection('players')
 	let statsCollection = bot.database.collection('stats')
 	let user = await collection.findOne({"userID":message.author.id})
-	if (!user)return message.channel.createMessage(`${message.author.mention} please run \`tlclaim\` to create an account`)
+	if (!user){
+		message.channel.createMessage(`${message.author.mention} please run \`tlclaim\` to create an account`)
+		throw Error ("no account exits")
+	}
 	if (chance <= 70){
 		let eggs = Math.floor(Math.random() * (30 - 10 + 1) + 10);
 		if (user.passive){
