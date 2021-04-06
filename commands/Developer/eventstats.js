@@ -9,6 +9,11 @@ module.exports.run = async (bot, message, args) => {
 		title: "Easter Event Stats",
 		fields: [
 			{
+				name: "Total Players",
+				value: result.totalPlayers,
+				inline: true,
+			},
+			{
 				name: "Total Staff Eggs",
 				value: `${result.staffEggs.toLocaleString()}`,
 				inline: true,
@@ -16,11 +21,6 @@ module.exports.run = async (bot, message, args) => {
 			{
 				name: "Total Found Eggs",
 				value: `${result.foundEggs.toLocaleString()}`,
-				inline: true,
-			},
-			{
-				name: "\u200B",
-				value: "\u200B",
 				inline: true,
 			},
 			{
@@ -34,8 +34,8 @@ module.exports.run = async (bot, message, args) => {
 				inline: true,
 			},
 			{
-				name: "\u200B",
-				value: "\u200B",
+				name: "Total Streaks",
+				value: result.streaks,
 				inline: true,
 			},
 		],
