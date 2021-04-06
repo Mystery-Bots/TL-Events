@@ -4,7 +4,9 @@ module.exports.run = async (bot, message, args) => {
 			`${message.author.username} (ID: ${message.author.id}) tried to use "eventstats"`
 		);
 	let collection = bot.database.collection("stats");
+	let playerCollection = bot.database.collection("players");
 	let result = await collection.findOne({ _id: "600608c92fe331ec1a128a1f" });
+	let longestStreak = await playerCollection.find().sort({streak:-1}).limit(1).toArray()
 	let embed = {
 		title: "Easter Event Stats",
 		fields: [
@@ -34,10 +36,15 @@ module.exports.run = async (bot, message, args) => {
 				inline: true,
 			},
 			{
-				name: "Total Streaks",
+				name: "Total Rewarded Streaks",
 				value: result.streaks,
 				inline: true,
 			},
+			{
+				name: "Longest Streak",
+				value: `${longestStreak[0].username}: ${longestStreak[0].streak} days`,
+				inline: true
+			}
 		],
 		color:0x42b3f5
 	};
