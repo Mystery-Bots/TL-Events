@@ -53,9 +53,8 @@ const load = (dir = "./commands/") => {
 					return console.warn(
 						`Two or more commands have the same name ${pull.info.name}.`
 					);
-				if (pull.info.disabled){}
 				// get more info about command for help command
-				else{bot.commands.set(pull.info.name, pull);}
+				bot.commands.set(pull.info.name, pull);
 				console.log(`Loaded command ${pull.info.name}.`);
 			} else {
 				console.log(
